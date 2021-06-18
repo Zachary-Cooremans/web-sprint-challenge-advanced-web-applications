@@ -30,11 +30,11 @@ const Login = (e) => {
       axios
       .post(`http://localhost:5000/api/login`, login)
       .then((res) => {
-        e.preventDefault()
         localStorage.setItem("token", res.data.payload);
-        history.push('/protected')
+        history.push('/bubbles')
       })
       .catch((err) => {
+        setError(err)
         console.log(err)
       })
     }
@@ -49,14 +49,14 @@ const Login = (e) => {
       <div data-testid="loginForm" className="login-form">
         <h2>Build login form here</h2>
         <form onSubmit={handleLogin}>
-          <input data-testid='username'
+          <input id='username' data-testid='username'
             type='text'
             name='username'
             value={login.username}
             onChange={handleChange}
           />
 
-          <input data-testid='password' 
+          <input id='password' data-testid='password' 
             type='text'
             name='password'
             value={login.password}
