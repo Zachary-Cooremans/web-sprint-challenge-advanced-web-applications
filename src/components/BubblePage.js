@@ -16,6 +16,20 @@ const BubblePage = () => {
   const [colors, setColors] = useState([]);
   const [editing, setEditing] = useState(false);
 
+  // window.location.reload()
+  useEffect(() => {
+    fetchColorService()
+    axiosWithAuth()
+    .get(`/colors`)
+    .then((res) => {
+      setColors(res.data)
+    })
+    .then((err) => {
+      console.log({err})
+    })
+    
+  }, [])
+
   const toggleEdit = (value) => {
     setEditing(value);
   };
@@ -49,19 +63,6 @@ const BubblePage = () => {
       console.log({err})
     })
   };
-
-  useEffect(() => {
-    fetchColorService()
-    axiosWithAuth()
-    .get(`/colors`)
-    .then((res) => {
-      setColors(res.data)
-    })
-    .then((err) => {
-      console.log({err})
-    })
-    
-  }, [])
 
   return (
     <div className="container">

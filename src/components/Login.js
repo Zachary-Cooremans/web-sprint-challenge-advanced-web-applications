@@ -24,12 +24,13 @@ const Login = (e) => {
   // when you have handled the token, navigate to the BubblePage route
   const handleLogin = (e) => {
     e.preventDefault();
-    if(login.username === '' || login.password === '') {
-      setError('Please fill our required fields')
+    if(login.username !== 'Lambda' || login.password !== 'School') {
+      setError('Please fill our required fields correctly')
     } else {
       axios
       .post(`http://localhost:5000/api/login`, login)
       .then((res) => {
+        e.preventDefault()
         localStorage.setItem("token", res.data.payload);
         history.push('/protected')
       })
