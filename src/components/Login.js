@@ -4,12 +4,12 @@ import axios from 'axios'
 
 const initialState = {
   username: 'Lambda',
-  password: 'School'
+  password: 'School',
+  error: ''
 }
 const Login = (e) => {
 
   const [login, setLogin] = useState(initialState)
-  const [error, setError] = useState()
 
   let history = useHistory()
 
@@ -25,22 +25,24 @@ const Login = (e) => {
   const handleLogin = (e) => {
     e.preventDefault();
     if(login.username !== 'Lambda' || login.password !== 'School') {
-      setError('Please fill our required fields correctly')
+      setLogin({...login, error:'Please fill our required fields correctly'})
     } else {
-      axios
-      .post(`http://localhost:5000/api/login`, login)
-      .then((res) => {
-        localStorage.setItem("token", res.data.payload);
-        history.push('/bubbles')
-      })
-      .catch((err) => {
-        setError(err)
-        console.log(err)
-      })
+      setLogin({...login, error: ''})
     }
+    
+    axios
+    .post(`http://localhost:5000/api/login`, login)
+    .then((res) => {
+      localStorage.setItem("token", res.data.payload);
+      history.push('/bubbles')
+    })
+    .catch((err) => {
+      setLogin({...login, error: 'Please fill out fields correctly'})
+      console.log(err)
+    })
   }
 
-  // const error = "";
+  const error = login.error;
   //replace with error state
 
   return (
