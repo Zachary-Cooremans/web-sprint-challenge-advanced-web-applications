@@ -13,9 +13,7 @@ const BubblePage = () => {
   console.log('bubble colors',colors)
 
   useEffect(() => {
-    toggleEdit(true);
     fetchColorService(setColors);
-    toggleEdit(false);
   }, [])
 
   const toggleEdit = (value) => {
@@ -23,7 +21,20 @@ const BubblePage = () => {
   };
 
   const saveEdit = (editColor) => {
-    editColorService(editColor)
+    //editColorService(editColor)
+    axiosWithAuth()
+    .put(`/colors/${editColor.id}`, editColor)
+    .then(res => {
+	    const newColors = colors.map(color => {
+	      if (color.id === editColor.id){
+	        return editColor
+	      } else {
+	        return color
+	    }
+	});
+	setColors(newColors);
+      })
+      .catch(alert);
   };
 
   const deleteColor = (colorToDelete) => {

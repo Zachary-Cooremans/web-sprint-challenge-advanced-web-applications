@@ -10,6 +10,7 @@ import "./styles.scss";
 const handleLogout = (e) => {
   e.preventDefault()
   localStorage.removeItem("token")
+  window.location.href = '/'
 }
 
 function App() {
